@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">YouHui_SMS</string>
+
+    <string name="notification_title">正在监听验证短信</string>
+    <string name="notification_text">点击可关闭该服务</string>
+
+    <string name="service_tip">油惠监听短信服务已经打开，您可以退出该app</string>
 </resources>
