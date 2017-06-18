@@ -1,10 +1,8 @@
 package com.sun.youhui_sms;
 
-import android.util.Log;
+import com.sun.youhui_sms.utils.TextUtils;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by SUN on 2017/6/17.

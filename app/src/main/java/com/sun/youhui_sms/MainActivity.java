@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.sun.youhui_sms.sms.SmsService;
+
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,8 +1,10 @@
-package com.sun.youhui_sms;
+package com.sun.youhui_sms.utils;
 
 import android.util.Patterns;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,18 +13,19 @@ import java.util.regex.Pattern;
  */
 public class TextUtils {
 
+
     /**
      * 获取文本中的验证码
      * @param content
      * @return
      */
-    public static String getCode(String content){
+    public static ArrayList<String> getNumList(String content){
         Pattern pattern = Pattern.compile("\\d{4,6}(?!\\d)");
         Matcher matcher = pattern.matcher(content);
-        String result = "";
+        ArrayList<String> result = new ArrayList<>();
         while (matcher.find()){
 //            System.out.println(matcher.group());
-            result = matcher.group();
+            result.add(matcher.group());
         }
         return result;
     }
