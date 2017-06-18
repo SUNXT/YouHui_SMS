@@ -10,12 +10,12 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.sun.youhui_sms.R;
 import com.sun.youhui_sms.contact.Contact;
 import com.sun.youhui_sms.utils.OkhttpUtils;
+import com.sun.youhui_sms.utils.SharedUtils;
 import com.sun.youhui_sms.utils.TextUtils;
 
 import org.json.JSONObject;
@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.Response;
 
 public class SmsService extends Service {
@@ -38,10 +37,25 @@ public class SmsService extends Service {
             if (msg.what == Contact.SMS_SERVICE_CODE){
                 String content = (String) msg.obj;
                 ArrayList<String> numList = TextUtils.getNumList(content);
-                if (numList.size() > 0){
+                if (numList.size() >= 2){
+                    String oldTailNum = SharedUtils.readStr(SmsService.this, Contact.TAIL_NUM);
+                    String oldMessageCode = SharedUtils.readStr(SmsService.this, Contact.MESSAGE_CODE);
+                    String newTailNum = numList.get(0);
+                    String newMessageCode = numList.get(1);
+
+                    //判断是否已经是请求过的验证码
+                    if (oldTailNum.equals(newTailNum) && oldMessageCode.equals(newMessageCode)){
+                        return;
+                    }
+
+                    //保存tailNum 和 messageCode
+                    SharedUtils.writeStr(SmsService.this, Contact.TAIL_NUM, newTailNum);
+                    SharedUtils.writeStr(SmsService.this, Contact.MESSAGE_CODE, newMessageCode);
+
+                    //进行网络请求
                     Map<String, String> map = new HashMap<>();
-                    map.put(Contact.TAIL_NUM, numList.get(0));
-                    map.put(Contact.MESSAGE_CODE, numList.get(1));
+                    map.put(Contact.TAIL_NUM, newTailNum);
+                    map.put(Contact.MESSAGE_CODE, newMessageCode);
                     JSONObject jsonObject = new JSONObject(map);
                     OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
                         @Override
@@ -55,7 +69,7 @@ public class SmsService extends Service {
                         }
                     });
 
-                    Toast.makeText(SmsService.this, "卡尾号："+ numList.get(0) + " 验证码：" + numList.get(1), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SmsService.this, "卡尾号："+ newTailNum + " 验证码：" + newMessageCode, Toast.LENGTH_SHORT).show();
                 }
 
             }
