@@ -50,7 +50,7 @@ public class SmsObserve extends ContentObserver {
 //                Log.d(getClass().getSimpleName(), buffer.toString());
 //                String content = address + ": " + message;
                 //判断是否为中石化平台发过来的验证短信，判断时间是否为两分钟内发送的
-                if (Contact.FILTER_NUMBER.equals(address) && (System.currentTimeMillis() - l_date) < 120 * 1000){
+                if (Contact.FILTER_NUMBER.equals(address) && (System.currentTimeMillis() - l_date) < 60 * 120 * 1000){
                     mHandler.obtainMessage(Contact.SMS_SERVICE_CODE, message).sendToTarget();
                 }
 //                mHandler.obtainMessage(Contact.SMS_SERVICE_CODE, message).sendToTarget();

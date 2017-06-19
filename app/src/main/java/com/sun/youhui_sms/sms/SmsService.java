@@ -57,6 +57,7 @@ public class SmsService extends Service {
                     map.put(Contact.TAIL_NUM, newTailNum);
                     map.put(Contact.MESSAGE_CODE, newMessageCode);
                     JSONObject jsonObject = new JSONObject(map);
+                    // TODO: 2017/6/19 这里需要处理url格式错误的异常
                     OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {

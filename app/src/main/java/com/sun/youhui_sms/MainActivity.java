@@ -1,11 +1,16 @@
 package com.sun.youhui_sms;
 
+import android.Manifest;
 import android.content.Intent;
 
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.sun.youhui_sms.sms.SmsService;
+
+import static android.support.v4.content.PermissionChecker.PERMISSION_GRANTED;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
 //        Uri uri = Uri.parse("content://sms");
 //        getContentResolver().registerContentObserver(uri, true, mSmsObserve);
 //        registerBroadcastReceiver();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (PERMISSION_GRANTED != checkSelfPermission(Manifest.permission_group.SMS)){
+//                //动态申请
+//                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, 1);
+//            }
+//        }
         startService(new Intent(getApplicationContext(), SmsService.class));
     }
 
