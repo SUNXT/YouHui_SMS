@@ -12,7 +12,8 @@ public class Contact {
 
 
 //    public static final String  URL_BASE = "http://10.242.1.53:8099/"; //lc macbook pro IP
-    public static final String  URL_BASE = "http://123.207.13.220:8099/";//服务器
+//    public static final String  URL_BASE = "http://123.207.13.220:8099/";//服务器 测试环境
+    public static final String  URL_BASE = "http://123.207.13.220:8080/";//服务器 生产环境
     public static final String  URL_SEND_MESSAGE = URL_BASE + "card/sendMessage";//请求地址（发送短信）
     public static final String  MESSAGE_CODE = "messageCode";//验证码
     public static final String  TAIL_NUM = "tailNum";//尾号
