@@ -5,8 +5,11 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 
 import com.sun.youhui_sms.contact.Contact;
+import com.sun.youhui_sms.utils.Log2FileUtils;
+import com.sun.youhui_sms.utils.TextUtils;
 
 import java.util.Date;
 
@@ -44,7 +47,7 @@ public class SmsObserve extends ContentObserver {
                 buffer.append("发送者：");
                 buffer.append(address+'\n');
                 buffer.append("发送时间：");
-                buffer.append(date.toString()+'\n');
+                buffer.append(TextUtils.longDateToString(l_date, "yyyyMMddHHmm")+'\n');
                 buffer.append("短信内容：");
                 buffer.append(message);
 //                Log.d(getClass().getSimpleName(), buffer.toString());
@@ -55,7 +58,8 @@ public class SmsObserve extends ContentObserver {
                 }
 //                mHandler.obtainMessage(Contact.SMS_SERVICE_CODE, message).sendToTarget();
 
-//                Log.i(getClass().getSimpleName(), buffer.toString());
+                Log.i(getClass().getSimpleName(), buffer.toString());
+//                Log2FileUtils.saveLog2File(buffer.toString());
             }
             cursor.close();
         }
