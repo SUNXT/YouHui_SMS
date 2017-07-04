@@ -16,9 +16,10 @@
         android:text="@string/service_tip"
         android:layout_centerInParent="true"/>
     <Button
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="发送请求"/>
+        android:text="测试发送请求，产生流量"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

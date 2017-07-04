@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 map.put(Contact.MESSAGE_CODE, "00000");
                 JSONObject jsonObject = new JSONObject(map);
                 // TODO: 2017/6/19 这里需要处理url格式错误的异常
-                OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
+                OkhttpUtils.enqueue(Contact.URL_TEST, jsonObject.toString(), new okhttp3.Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         Log.i(TAG, "请求失败！" + e.getMessage());

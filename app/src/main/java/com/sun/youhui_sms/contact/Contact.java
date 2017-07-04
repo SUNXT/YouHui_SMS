@@ -17,4 +17,6 @@ public class Contact {
     public static final String  URL_SEND_MESSAGE = URL_BASE + "card/sendMessage";//请求地址（发送短信）
     public static final String  MESSAGE_CODE = "messageCode";//验证码
     public static final String  TAIL_NUM = "tailNum";//尾号
+
+    public static final String  URL_TEST = "http://123.207.13.220:8099/card/sendMessage";
 }
