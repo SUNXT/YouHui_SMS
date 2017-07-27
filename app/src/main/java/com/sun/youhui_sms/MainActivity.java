@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.sun.youhui_sms.contact.Contact;
 import com.sun.youhui_sms.sms.SmsService;
+import com.sun.youhui_sms.utils.Log2FileUtils;
 import com.sun.youhui_sms.utils.OkhttpUtils;
 import com.sun.youhui_sms.utils.PermissionUtils;
 import com.sun.youhui_sms.utils.ToastUtils;
@@ -56,27 +57,32 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //进行网络请求
-                Map<String, String> map = new HashMap<>();
-                map.put(Contact.TAIL_NUM, "00000");
-                map.put(Contact.MESSAGE_CODE, "00000");
-                JSONObject jsonObject = new JSONObject(map);
-                // TODO: 2017/6/19 这里需要处理url格式错误的异常
-                OkhttpUtils.enqueue(Contact.URL_TEST, jsonObject.toString(), new okhttp3.Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.i(TAG, "请求失败！" + e.getMessage());
-                    }
+               Log2FileUtils.saveLog2File(getApplicationContext(), "测试");
+            }
+        });
+    }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        if (response.isSuccessful()){
-                            Log.i(TAG, "请求成功！");
-                        }else {
-                            Log.i(TAG, "请求失败！");
-                        }
-                    }
-                });
+    private void onTestConnection(){
+        //进行网络请求
+        Map<String, String> map = new HashMap<>();
+        map.put(Contact.TAIL_NUM, "00000");
+        map.put(Contact.MESSAGE_CODE, "00000");
+        JSONObject jsonObject = new JSONObject(map);
+        // TODO: 2017/6/19 这里需要处理url格式错误的异常
+        OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.i(TAG, "请求失败！" + e.getMessage());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()){
+                    Log.i(TAG, "请求成功！");
+
+                }else {
+                    Log.i(TAG, "请求失败！");
+                }
             }
         });
     }
