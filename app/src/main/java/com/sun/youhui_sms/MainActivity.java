@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.sun.youhui_sms.contact.Contact;
 import com.sun.youhui_sms.sms.SmsService;
 import com.sun.youhui_sms.utils.Log2FileUtils;
+import com.sun.youhui_sms.utils.Logger;
 import com.sun.youhui_sms.utils.OkhttpUtils;
 import com.sun.youhui_sms.utils.PermissionUtils;
 import com.sun.youhui_sms.utils.ToastUtils;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Log2FileUtils.saveLog2File(getApplicationContext(), "测试");
+                Logger.log("测试");
             }
         });
     }

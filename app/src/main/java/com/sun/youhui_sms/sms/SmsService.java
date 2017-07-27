@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.sun.youhui_sms.R;
 import com.sun.youhui_sms.contact.Contact;
 import com.sun.youhui_sms.utils.Log2FileUtils;
+import com.sun.youhui_sms.utils.Logger;
 import com.sun.youhui_sms.utils.OkhttpUtils;
 import com.sun.youhui_sms.utils.SharedUtils;
 import com.sun.youhui_sms.utils.TextUtils;
@@ -61,22 +62,26 @@ public class SmsService extends Service {
                     map.put(Contact.TAIL_NUM, newTailNum);
                     map.put(Contact.MESSAGE_CODE, newMessageCode);
                     final JSONObject jsonObject = new JSONObject(map);
-                    Log2FileUtils.saveLog2File(getApplicationContext(), "进行网络请求：参数：" + jsonObject.toString());
+//                    Log2FileUtils.saveLog2File(getApplicationContext(), "进行网络请求：参数：" + jsonObject.toString());
+                    Logger.log(" ");
+                    Logger.log("进行网络请求：参数：" + jsonObject.toString());
                     OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.i(TAG, "请求失败！" + e.getMessage());
-                            Log2FileUtils.saveLog2File(getApplicationContext(), "网络请求失败！ 参数："+ jsonObject.toString() + "OkHttp onFailure()--" + e.getMessage());
+//                            Log2FileUtils.saveLog2File(getApplicationContext(), "网络请求失败！ 参数："+ jsonObject.toString() + "OkHttp onFailure()--" + e.getMessage());
+                            Logger.log("网络请求失败！ 参数："+ jsonObject.toString() + "OkHttp onFailure()--" + e.getMessage());
                         }
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             if (response.isSuccessful()){
                                 Log.i(TAG, "请求成功！");
-                                Log2FileUtils.saveLog2File(getApplicationContext(), "网络请求成功！参数："+ jsonObject.toString());
+//                                Log2FileUtils.saveLog2File(getApplicationContext(), "网络请求成功！参数："+ jsonObject.toString());
+                                Logger.log("网络请求成功！参数："+ jsonObject.toString());
                             }else {
                                 Log.i(TAG, "请求失败！");
-                                Log2FileUtils.saveLog2File(getApplicationContext(), "网络请求失败！(连接成功) 参数："+ jsonObject.toString());
+                                Logger.log( "网络请求失败！(连接成功) 参数："+ jsonObject.toString());
                             }
                         }
                     });
