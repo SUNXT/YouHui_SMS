@@ -66,7 +66,7 @@ public class SmsService extends Service {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.i(TAG, "请求失败！" + e.getMessage());
-                            Log2FileUtils.saveLog2File("网络请求失败！ 参数："+ jsonObject.toString() + e.getMessage());
+                            Log2FileUtils.saveLog2File("网络请求失败！ 参数："+ jsonObject.toString() + "OkHttp onFailure()--" + e.getMessage());
                         }
 
                         @Override
