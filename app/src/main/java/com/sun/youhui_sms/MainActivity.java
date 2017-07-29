@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Logger.log("测试");
+                onTestConnection();
             }
         });
     }
@@ -70,19 +70,21 @@ public class MainActivity extends AppCompatActivity {
         map.put(Contact.MESSAGE_CODE, "00000");
         JSONObject jsonObject = new JSONObject(map);
         // TODO: 2017/6/19 这里需要处理url格式错误的异常
-        OkhttpUtils.enqueue(Contact.URL_SEND_MESSAGE, jsonObject.toString(), new okhttp3.Callback() {
+        OkhttpUtils.enqueue(Contact.URL_TEST, jsonObject.toString(), new okhttp3.Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.i(TAG, "请求失败！" + e.getMessage());
+                Logger.log("测试请求，请求失败！" + e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()){
                     Log.i(TAG, "请求成功！");
-
+                    Logger.log("测试请求，请求成功！");
                 }else {
                     Log.i(TAG, "请求失败！");
+                    Logger.log("测试请求，请求失败！" + response.message());
                 }
             }
         });
